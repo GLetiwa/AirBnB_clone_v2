@@ -5,6 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models.base_model import Base
 from sqlalchemy.exc import NoSuchTableError
+
+
 class DBStorage:
     """Defines the DBStorage engine for database storage"""
 
@@ -12,9 +14,9 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        
+
         """Initialize the DBStorage engine"""
-        """ 
+        """
         user = 'hbnb_dev'
         pwd = 'hbnb_dev_pwd'
         host = 'localhost'
@@ -38,7 +40,7 @@ class DBStorage:
             expire_on_commit=False
         ))
 
-    def all(self, cls=None): # Query objects from the db based on class name
+    def all(self, cls=None):
         """Query objects from the db based on class name"""
         from models.base_model import Base
         from models.user import User
@@ -53,12 +55,12 @@ class DBStorage:
         classes = [User, State, City, Place, Amenity, Review]
 
         if cls:
-            if isinstance(cls, str) == False:
+            if isinstance(cls, str) is False:
                 cls = cls.__name__
 
             for cl_ass in classes:
                 name = cl_ass.__name__
-                if cl_ass.__name__ == cls :
+                if cl_ass.__name__ == cls:
                     classes = [cl_ass]
 
         for c in classes:
@@ -71,24 +73,24 @@ class DBStorage:
                 continue
 
         return objects_dict
-    
-    def new(self, obj): # Add the object to the current db session
+
+    def new(self, obj):
         """Add the object to the current db session"""
         Base.metadata.create_all(self.__engine)
         self.__session.add(obj)
-    
-    def save(self): # Commit all changes of the current db session
+
+    def save(self):
         """Commit all changes of the current db session"""
         self.__session.commit()
 
-    def reload(self): # create all tables and current db session
+    def reload(self):
         """
         Create all tables in the db
         Create the current db session
         """
         Base.metadata.create_all(self.__engine)
-    
-    def delete(self, obj=None): # delete from the current db session
+
+    def delete(self, obj=None):
         """Delete from the current database session"""
         if (obj):
             try:
@@ -99,6 +101,7 @@ class DBStorage:
 
             except AttributeError:
                 return
+
     def close(self):
         """close working SQLAlchemy session"""
         self.__session.close()

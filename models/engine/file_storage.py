@@ -12,7 +12,7 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         specific = {}
         if cls:
-            if isinstance(cls, str) == False:
+            if isinstance(cls, str) is False:
                 cls = cls.__name__
 
             for key, val in FileStorage.__objects.items():
@@ -73,6 +73,7 @@ class FileStorage:
 
             except AttributeError:
                 return
+
     def close(self):
         """deserializes JSON files to objects"""
         self.reload()
