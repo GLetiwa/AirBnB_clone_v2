@@ -73,3 +73,6 @@ class FileStorage:
 
             except AttributeError:
                 return
+    def close(self):
+        """deserializes JSON files to objects"""
+        self.reload()

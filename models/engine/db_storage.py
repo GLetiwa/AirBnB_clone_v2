@@ -99,4 +99,6 @@ class DBStorage:
 
             except AttributeError:
                 return
-            
+    def close(self):
+        """close working SQLAlchemy session"""
+        self.__session.close()
